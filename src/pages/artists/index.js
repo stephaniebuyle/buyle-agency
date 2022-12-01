@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../../components/layout'
 
-const ArtistsPage = ({data: {allWpArtist: {edges}}}) => {
+const ArtistsPage = ({ data: { allWpArtist: { edges } } }) => {
   return (
     <Layout pageTitle="Artists of Buyle Agency">
       {edges.map((item) => {
@@ -11,8 +11,11 @@ const ArtistsPage = ({data: {allWpArtist: {edges}}}) => {
         return <Link to={`/artists/${slug}`}>
           <p key={item.node.id}>{artist.firstName} {artist.lastName}</p>
         </Link>
+        
 
       })}
+
+    
     </Layout>
   )
 }
