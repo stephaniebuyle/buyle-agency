@@ -36,7 +36,6 @@ const Layout = ({ children }) => {
       <nav className={nav}>
         <header className={siteTitle}>{data.site.siteMetadata.title}</header>
         <ul className={navLinks}>
-          <li></li>
           <li className={navLinkItem}>
             <Link className={navLinkText} to="/">
               Home
@@ -50,6 +49,11 @@ const Layout = ({ children }) => {
           <li className={navLinkItem}>
             <Link className={navLinkText} to="/artists">
               Artists
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link className={navLinkText} to="/contact">
+              Contact
             </Link>
           </li>
         </ul>
