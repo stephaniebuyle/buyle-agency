@@ -1,12 +1,87 @@
-import * as React from 'react'
-import Layout from '../components/layout'
+import * as React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import Layout from "../components/layout"
+import {
+  header,
+  headerInfo,
+  headerPicture,
+  subtitle,
+  missionSection,
+  missionInfo,
+} from "../page.module.css"
 
-const AboutPage = () => {
+const AboutPage = ({
+  data: {
+    wpPage: { aboutUsFields },
+  },
+}) => {
+  const goalPicture = getImage(aboutUsFields.goalPicture.localFile)
+  const missionPicture = getImage(aboutUsFields.missionPicture.localFile)
+
   return (
     <Layout pageTitle="About Us">
-      <p>Artist Agency was founded in 1977 by founder, John Doe. AA continues to be at the forefront of art by establishing the careers of our talents on a holistic level -- and setting trends within the industry. </p>
+      <section className={header}>
+        <article className={headerInfo}>
+          <h2 className={subtitle}>{aboutUsFields.goalTitle}</h2>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: aboutUsFields.goalDescription,
+            }}
+          />
+        </article>
+        <GatsbyImage
+          className={headerPicture}
+          image={goalPicture}
+          alt={aboutUsFields.goalPicture.altText}
+        />
+      </section>
+      <section className={missionSection}>
+        <GatsbyImage
+          className={headerPicture}
+          image={missionPicture}
+          alt={aboutUsFields.missionPicture.altText}
+        />
+        <article className={missionInfo}>
+          <h2 className={subtitle}>{aboutUsFields.missionTitle}</h2>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: aboutUsFields.missionDescription,
+            }}
+          />
+        </article>
+      </section>
     </Layout>
   )
 }
 
 export default AboutPage
+
+export const query = graphql`
+  query {
+  wpPage(slug: {eq: "about-us"}) {
+    aboutUsFields {
+      goalDescription
+      goalTitle
+      goalPicture {
+        altText
+        localFile {
+          childImageSharp {
+            gatsbyImageData(placeholder: BLURRED)
+          }
+        }
+      }
+      missionTitle
+      missionDescription
+      missionPicture {
+        altText
+        localFile {
+          childImageSharp {
+            gatsbyImageData(placeholder: BLURRED)
+          }
+        }
+      }
+    }
+  }
+}
+`
